@@ -1,22 +1,22 @@
-import axios from 'axios'
-import { MessageEmbed } from 'discord.js';
-import { parse } from 'node-html-parser'
-import he from 'he'
-import { deleteMessage } from '../common.js'
+import axios from 'axios';
+import { parse } from 'node-html-parser';
+import he from 'he';
+import { createEmbed, deleteMessage } from '../common.js';
+import { embedDescriptionLimit } from '../globals.js';
 
-const deleteTags = /<[^>]*>/gim
-const urbanURL = "https://www.urbandictionary.com/define.php"
+const deleteTags = /<[^>]*>/gim;
+const urbanURL = "https://www.urbandictionary.com/define.php";
 
-const help = "usage: `d!urban <word/sentence> [@mention]`"
+const help = "usage: `d!urban <word/sentence> [@mention]`";
 export default {
     name: "urban",
     run: handle,
     help
-}
+};
 
 async function handle(msg, msgDetails) {
-    const sendResultTo = msgDetails.mentionOrAuthor
-    const word = msgDetails.args.join(" ")
+    const sendResultTo = msgDetails.mentionOrAuthor;
+    const word = msgDetails.args.join(" ");
     try {
         if (!word) {
             msg.author.send(help);
@@ -25,20 +25,22 @@ async function handle(msg, msgDetails) {
 
         console.log(`d!urban: ${msg.author.username} searched for ${word} sending to ${sendResultTo.username}`);
 
-        let { data } = await axios.get(`${urbanURL}?term=${encodeURI(word)}`)
+        let { data } = await axios.get(`${urbanURL}?term=${encodeURI(word)}`);
 
-        let divs = parse(data).querySelectorAll(".def-panel")
+        let divs = parse(data).querySelectorAll(".def-panel");
 
         if (!divs) {
-            msg.author.send(`${word} has no entry in the Urban Dictionary`)
-            deleteMessage(msg)
+            msg.author.send(`${word} has no entry in the Urban Dictionary`);
+            return deleteMessage(msg);
         }
 
-        let filtereddivs = divs.filter(div => div.querySelector(".word").firstChild.rawText.toLowerCase() === word.toLowerCase())
+        let filtereddivs = divs.filter(div => div.querySelector(".word").firstChild.rawText.toLowerCase() === word.toLowerCase());
 
-        let meanings = filtereddivs.map(d => d.querySelector(".meaning").toString())
+        let meanings = filtereddivs.map(d => d.querySelector(".meaning").toString());
 
-        let meaningStrings = meanings.map(d => he.decode(d.replace(deleteTags, "")))       
+        let meaningStrings = meanings
+            .map(d => d.replace("<br>","\n"))       
+            .map(d => he.decode(d.replace(deleteTags, "")));    
 
         if (sendResultTo.id === msg.author.id)
             msg.author.send(`You asked for the definition of \`${word}\`, let's see them`);
@@ -47,33 +49,34 @@ async function handle(msg, msgDetails) {
             msg.author.send(`I have sent the definition of \`${word}\` to ${sendResultTo.username}.`);
         }
 
-        let descrString = ''
+        let descrString = '';
         meaningStrings.splice(0, 5).forEach(meaning => {
-            descrString += `*__*\n`;
-            descrString += `\`\`\`${meaning}\`\`\`\n`;
+            if(`${descrString}*__*\n\`\`\`${meaning}\`\`\`\n`.length < embedDescriptionLimit)
+                descrString += `*__*\n\`\`\`${meaning}\`\`\`\n`;
         });
 
+        const embedData = {
+            title:`d!urban: ${word}`,
+            url:`${urbanURL}?term=${encodeURI(word)}`,            
+            description: descrString,
+            color:"#4E5D94",
+            footer:"Results provided by Urban Dictionary",
+            footerImage: "https://img.utdstc.com/icon/4af/833/4af833b6befdd4c69d7ebac403bfa087159601c9c129e4686b8b664e49a7f349:200"
+        };
 
-        const embed = new MessageEmbed()
-            .setTitle(`d!urban: ${word}`)
-            .setDescription(`${descrString.substr(0,1950)}\n[Web Page](${urbanURL}?term=${encodeURI(word)})`)
-            .setColor("#4E5D94")
-            .setFooter("Made by MrJunior717, go bother him if something's broken, Results provided by Urban Dictionary");
-
+        const embed = createEmbed(embedData);    
+           
         sendResultTo.send(embed);
-
-
 
     } catch (e) {
         //console.error(e)
-        if(e.response.status === 404){
-            msg.author.send(`${word} has no entry in the Urban Dictionary`)
-            deleteMessage(msg)
-        }
-
-        else{
-            msg.author.send("something has fatally wrong, please contact MrJunior717")
-        }
+        if(e.response.status === 404)
+            msg.author.send(`${word} has no entry in the Urban Dictionary`);
+        else
+            msg.author.send("something has fatally wrong, please contact MrJunior717");        
+    }
+    finally {
+        deleteMessage(msg);
     }
 
 }

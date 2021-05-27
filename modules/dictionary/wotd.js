@@ -2,7 +2,7 @@ import axios from 'axios'
 import { MessageEmbed } from 'discord.js';
 import { parse } from 'node-html-parser'
 import he from 'he'
-import { deleteMessage } from '../common.js'
+import { deleteMessage, createEmbed } from '../common.js'
 
 const deleteTags = /<[^>]*>/gim
 const wotdURL = "https://www.dictionary.com/e/word-of-the-day/"
@@ -32,25 +32,27 @@ async function handle(msg, msgDetails) {
         let meaningString = he.decode(meaningDOM.toString().replace(deleteTags, "").trim())
         let meaningParts = meaningString.split(" ").filter(c => c && !/\s/m.test(c))
         let pos = meaningParts.shift()
-        let meaning = meaningParts.join(" ")      
+        let meaning = meaningParts.join(" ")
 
+        const embedData = {
+            title:`d!wotd: ${wordString}`,
+            url:`https://www.dictionary.com/e/word-of-the-day/`,            
+            description: `${pronString}\n__\n${pos}\n\`\`\`${meaning}\`\`\`\n[Web Page](${wotdURL})`,
+            color:"#4E5D94",
+            footer:"Results provided by Dictionary.com",
+            footerImage: "https://img.flaticon.com/icons/png/512/0/928.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
+        };
 
-        const embed = new MessageEmbed()
-            .setTitle(`d!wotd: ${wordString}`)
-            .setDescription(`${pronString}\n__\n${pos}\n\`\`\`${meaning}\`\`\`\n[Web Page](${wotdURL})`)
-            .setColor("#4E5D94")
-            .setFooter("Made by MrJunior717, go bother him if something's broken, Results provided by Dictionary.com");
-
+        const embed = createEmbed(embedData)
+            
         sendResultTo.send(embed);
 
-
-
     } catch (e) {
-
-
-
         msg.author.send("something has fatally wrong, please contact MrJunior717")
         console.error(e)
+    }
+    finally {
+        deleteMessage(msg);
     }
 
 }

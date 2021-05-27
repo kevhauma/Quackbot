@@ -1,7 +1,7 @@
 
 import { Client } from 'discord.js';
 
-const client = new Client();
+export const client = new Client();
 
 import { getMessageDetails } from './modules/common.js';
 

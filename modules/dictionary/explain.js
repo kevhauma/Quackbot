@@ -1,19 +1,19 @@
-import axios from 'axios'
-import { MessageEmbed } from 'discord.js';
+import axios from 'axios';
 
-import { deleteMessage } from '../common.js'
+import { createEmbed, deleteMessage } from '../common.js';
+import { embedDescriptionLimit } from '../globals.js';
 
-const languages = ["en_GB", "fr", "ja", "hi", "es", "ru", "en_US", "de", "it", "ko", "pt-BR", "ar", "tr"]
-const language = languages[0]
+const languages = ["en_GB", "fr", "ja", "hi", "es", "ru", "en_US", "de", "it", "ko", "pt-BR", "ar", "tr"];
+const language = languages[0];
 
-const help = "usage: `d!explain <word> [language] [@mention]"
-export default { name:"explain", run: handle, help}
+const help = "usage: `d!explain <word> [language] [@mention]";
+export default { name:"explain", run: handle, help};
 
 
 async function handle(msg, msgDetails) {
 
-    const sendResultTo = msgDetails.mentionOrAuthor
-    const word = msgDetails.args[0]
+    const sendResultTo = msgDetails.mentionOrAuthor;
+    const word = msgDetails.args[0];
     const chosenLang = msgDetails.args[1] ?? language;
 
     if(!word){
@@ -75,16 +75,22 @@ async function otherSearch(word, lang) {
             descrString += `*__*\n`;
             descrString += `**${meaning.partOfSpeech}**\n`;
             meaning.definitions.forEach(def => {
-                descrString += `\`\`\`${def.definition}\`\`\``;
-                descrString += `${def.example ? `\`Example:\` ${def.example} \n`:''}  ${def.synonyms ? `\`Synonyms:\` ${def.synonyms.splice(0,8).join(", ")}\n\n`: "\n"}`;
+                let tempString = `${descrString}\`\`\`${def.definition}\`\`\`${def.example ? `\`Example:\` ${def.example} \n`:''}  ${def.synonyms ? `\`Synonyms:\` ${def.synonyms.splice(0,8).join(", ")}\n\n`: "\n"}`
+                if(tempString.length < embedDescriptionLimit)
+                    descrString = tempString;
             });
         });
 
-        const embed = new MessageEmbed()
-            .setTitle(`d!eplain ${entry.word}`)
-            .setDescription(`${descrString.substr(0,1950)}\n[Web Page](https://www.dictionary.com/browse/${word})`)
-            .setColor("#4E5D94")
-            .setFooter("Made by MrJunior717, go bother him if something's broken, Results provided by DictionaryAPI");
+         const embedData = {
+            title:`d!explain ${entry.word} - ${lang}`,
+            url:`https://www.dictionary.com/browse/${word})`,            
+            description: descrString,
+            color:"#4E5D94",
+            footer:"Results provided by DictionaryAPI",
+            footerImage: "https://findicons.com/files/icons/2595/leopard_graphite/512/dictionary.png"
+        };
+
+        const embed = createEmbed(embedData)            
 
         responses.push(embed);
     });
@@ -116,11 +122,15 @@ async function japaneseSearch(word) {
         descrString += en.senses.map(sens => sens['english_definitions'].join(", ")).join(", ")
     })
 
-    const embed = new MessageEmbed()
-        .setTitle(`d!eplain ${word}`)
-        .setColor("#4E5D94")
-        .setDescription(`${descrString}\n\n More info in [Jisho.org](https://jisho.org/search/${encodeURI(word)})`)
-        .setFooter("Made by MrJunior717, Go bother him if something's broken. Results provived by Jisho.org");
+   const embedData = {
+            title:`d!explain ${word}`,
+            url:`https://jisho.org/search/${encodeURI(word)}`,            
+            description: descrString,
+            color:"#4E5D94",
+            footer:"Results provived by Jisho.org",
+            footerImage: "https://avatars.githubusercontent.com/u/12574115?s=280&v=4"
+        };
 
+        const embed = createEmbed(embedData)
     return [embed];
 }
