@@ -10,6 +10,7 @@ general discord bot for own use
 
 - [ ] Dictionary
   - [ ] Urban Dictionary Word of the Day
+  - [ ] Urban Dictionary adding example phrases
   - [ ] Translations(?)
 
 - [ ] Games
