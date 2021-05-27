@@ -11,7 +11,7 @@ For development, you will only need Node.js;
 
 ## Install
     $ git clone https://github.com/kevhauma/Quackbot.git
-    $ cd PROJECT_TITLE
+    $ cd Quackbot
     $ npm install
 
 ## Configure app
