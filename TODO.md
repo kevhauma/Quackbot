@@ -10,13 +10,16 @@ general discord bot for own use
 
 - [ ] Dictionary
   - [ ] Urban Dictionary Word of the Day
-  - [ ] Translations(?)
 
+### Ideas
 - [ ] Games
   - [ ] Hangman
   - [ ] Higher-Lower
   - [ ] Slots
   
+- [ ] Dictionary
+  - [ ] Translations(?)
+
 ### Doing
 - [ ] Dictionary
   - [ ] only adminroles/owners can DM people via the bot
