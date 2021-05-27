@@ -1,3 +1,1 @@
-export default {
-    embedDescriptionLimit: 2000,
-}
+export const embedDescriptionLimit = 2000;
