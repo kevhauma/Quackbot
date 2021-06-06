@@ -11,11 +11,13 @@ export function getMessageDetails(msg) {
 	const firstWord = args.shift();
 
 	let mentionOrAuthor = msg.mentions.members?.array()[0]?.user ?? msg.author;
+	let isOwner = msg.guild.ownerID !== msg.author.id;
 
 	return {
 		args,
 		firstWord,
 		mentionOrAuthor,
+		isOwner
 	};
 }
 
