@@ -3,6 +3,7 @@ general discord bot for own use
 
 ### TODO
 - [ ] Infrastructure
+  - [ ] decent logging
   - [ ] seperate settings for servers/guilds
   - [ ] info commands of modules
   - [ ] help commands per module
