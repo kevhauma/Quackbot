@@ -25,7 +25,7 @@ async function handle(msg, msgDetails) {
 			return deleteMessage(msg);
 		}
 
-		if(msg.mentions.members?.array()[0] && !msgDetails.isOwner){
+		if(msgDetails.hasMentions && !msgDetails.isOwner){
 			msg.author.send(`You're not allowed to send \`${word}\` to ${msg.mentions.members.array()[0].user.username}`);
 			return deleteMessage(msg);
 		}
