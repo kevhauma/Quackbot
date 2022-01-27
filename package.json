@@ -6,7 +6,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r dotenv/config index.js",
-    "start:prod": "node index.js --env BOT_TOKEN=$BOT_TOKEN --env OWNER=BOT_OWNER",
     "lint": "eslint ./*"
   },
   "author": "",
