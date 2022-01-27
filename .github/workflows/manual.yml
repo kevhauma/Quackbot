@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Create env file
         id: dotenv
-        uses: ./.github/actions/dotenv-action
+        uses: actions/dotenv-action
       - name: Checkout
         uses: actions/checkout@v2
       - name: Deploy
