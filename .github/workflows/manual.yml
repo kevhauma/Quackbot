@@ -13,9 +13,9 @@ jobs:
   deploy:
     # The type of runner that the job will run on
     runs-on: [self-hosted, linux, x64]
+    name: Deploy
     steps:
-      - name: build_deploy
-        run: |
-          docker build -t quackbot:local .
-          echo "Build completed, now running"
-          docker run -d --name quackers quackbot:local
+      - name: deploy
+        id: hello
+        uses: actions/Quackbot@v1
+       
