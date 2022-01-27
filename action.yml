@@ -1,3 +1,4 @@
+#action
 name: 'Install and Run'
 description: 'Installs node packages and runs app'
 runs:
