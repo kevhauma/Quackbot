@@ -16,8 +16,11 @@ jobs:
     name: Deploy
     steps:
       - name: Create env file
-        id: dotenv
-        uses: actions/dotenv-action
+        run: |
+          touch .env
+          echo "BOT_TOKEN=$BOT_TOKEN" >> .env
+          echo "OWNER=$BOT_OWNER" >> .env
+          cat .env
       - name: Checkout
         uses: actions/checkout@v2
       - name: Deploy
