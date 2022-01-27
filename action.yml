@@ -1,0 +1,7 @@
+name: 'Install and Run'
+description: 'Installs node packages and runs app'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'  
+run:
+  runs-on: [self-hosted, linux, x64]
