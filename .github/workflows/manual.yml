@@ -21,14 +21,14 @@ jobs:
     steps:
       - name: display secrets
         run: |
-          echo "token: $BT"
-          echo "owner: $BO"          
-          echo "token: ${BT}"
-          echo "owner: ${BO}"          
+          touch .env
+          echo "BOT_TOKEN=$BT" >> .env
+          echo "OWNER=$BO" >> .env
+          cat .env
       - name: Checkout
         uses: actions/checkout@v2
       - name: Deploy
-        uses: ./ # Uses an action in the root directory
+        uses: ./
         id: deploy
        
        
