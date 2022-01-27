@@ -18,12 +18,17 @@ async function handle(msg, msgDetails) {
 	const sendResultTo = msgDetails.mentionOrAuthor;
 	const word = msgDetails.args.join(" ");
 	try {
+		console.log(`d!urban: ${msg.author.username} searched for ${word} sending to ${sendResultTo.username}`);
+		
 		if (!word) {
 			msg.author.send(help);
 			return deleteMessage(msg);
 		}
 
-		console.log(`d!urban: ${msg.author.username} searched for ${word} sending to ${sendResultTo.username}`);
+		if(msgDetails.hasMentions && !msgDetails.isOwner){
+			msg.author.send(`You're not allowed to send \`${word}\` to ${msg.mentions.members.array()[0].user.username}`);
+			return deleteMessage(msg);
+		}
 
 		let { data } = await axios.get(`${urbanURL}?term=${encodeURI(word)}`);
 

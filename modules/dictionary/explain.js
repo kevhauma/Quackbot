@@ -16,12 +16,18 @@ async function handle(msg, msgDetails) {
 	const word = msgDetails.args[0];
 	const chosenLang = msgDetails.args[1] ?? language;
 
+	console.log(`d!explain: ${msg.author.username} searched for ${word} in ${chosenLang}, sending to ${sendResultTo.username}`);
+
 	if(!word){
 		msg.author.send(help);
 		return deleteMessage(msg);
 	}
-
-	console.log(`d!explain: ${msg.author.username} searched for ${word} in ${chosenLang}, sending to ${sendResultTo.username}`);
+	
+	if(msgDetails.hasMentions && !msgDetails.isOwner){
+		msg.author.send(`You're not allowed to send \`${word}\` to ${msg.mentions.members.array()[0].user.username}`);
+		return deleteMessage(msg);
+	}
+	
 	if (!languages.includes(chosenLang)) {
 		msg.author.send(`\`${chosenLang}\` is not an available languages, choose one of the following: ${languages.join(", ")}`);
 		return deleteMessage(msg);
