@@ -25,4 +25,5 @@ client.on("message", async msg => {
 	});
 
 });
+console.log(process.env);
 client.login(process.env.BOT_TOKEN);
