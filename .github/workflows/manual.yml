@@ -17,5 +17,5 @@ jobs:
     steps:
       - name: deploy
         id: hello
-        uses: actions/Quackbot@v1
+        uses: kevhauma/Quackbot@v1
        
