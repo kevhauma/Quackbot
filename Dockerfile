@@ -1,8 +1,8 @@
-FROM node:12-alpine as build
+FROM node:17-alpine
 WORKDIR /app
 COPY ./package.json /app/
 COPY ./package-lock.json /app/
-RUN npm ci
+RUN yarn install
 COPY . /app
 RUN cd /app
-RUN npm run start
+RUN yarn start
