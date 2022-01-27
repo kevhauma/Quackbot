@@ -14,8 +14,8 @@ jobs:
     # The type of runner that the job will run on
     runs-on: [self-hosted, linux, x64]
     steps:
-      - name: build:dovker
+      - name: build_deploy
         run: |
-          docker build -t quackBot:local .
+          docker build -t quackbot:local .
           echo "Build completed, now running"
-          docker run -d --name Quackers quackBot:local
+          docker run -d --name quackers quackbot:local
