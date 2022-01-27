@@ -1,0 +1,8 @@
+{
+    "name": "Deploy",
+    "description": "deploys discord bot",
+    "iconName": "example-icon",
+    "categories": [
+        "Javascript"
+    ]
+}

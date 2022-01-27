@@ -1,0 +1,26 @@
+on:
+  pull_request:
+    branches:    
+      - main
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+   
+
+name: Octo Organization CI
+
+on:
+  push:
+    branches: 
+      - main
+  
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux, x64]
+    steps:
+      - name: build:dovker
+        run: |
+          docker build -t quackBot:local .
+          echo "Build completed, now running"
+          docker run -d --name Quackers quackBot:local
