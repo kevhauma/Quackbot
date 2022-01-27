@@ -15,15 +15,16 @@ jobs:
     runs-on: [self-hosted, linux, x64]
     name: Deploy
     environment: production
+    env:
+     BT: ${{ secrets.BOT_TOKEN }}
+     BO: ${{ secrets.BOT_OWNER }}
     steps:
       - name: display secrets
         run: |
-          echo "token: $BOT_TOKEN"
-          echo "owner: $BOT_OWNER"
-          echo "token: $production.BOT_TOKEN"
-          echo "owner: $production.BOT_OWNER"
-          echo "token: $secrets.BOT_TOKEN"
-          echo "owner: $secrets.BOT_OWNER"
+          echo "token: $BT"
+          echo "owner: $BO"          
+          echo "token: ${BT}"
+          echo "owner: ${BO}"          
       - name: Checkout
         uses: actions/checkout@v2
       - name: Deploy
