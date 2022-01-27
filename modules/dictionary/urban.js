@@ -1,9 +1,9 @@
 import axios from "axios";
-import { parse } from "node-html-parser";
+import htmlParser from "node-html-parser";
 import he from "he";
 import { createEmbed, deleteMessage } from "../common.js";
 import { embedDescriptionLimit } from "../globals.js";
-
+const { parse } = htmlParser;
 const deleteTags = /<[^>]*>/gim;
 const urbanURL = "https://www.urbandictionary.com/define.php";
 
@@ -26,7 +26,7 @@ async function handle(msg, msgDetails) {
 		}
 
 		if(msgDetails.hasMentions && !msgDetails.isOwner){
-			msg.author.send(`You're not allowed to send \`${word}\` to ${msg.mentions.members.array()[0].user.username}`);
+			msg.author.send(`You're not allowed to send \`${word}\` to ${msg.mentions.members.toJSON()[0].user.username}`);
 			return deleteMessage(msg);
 		}
 

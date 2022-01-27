@@ -1,8 +1,8 @@
 import axios from "axios";
-import { parse } from "node-html-parser";
+import htmlParser from "node-html-parser";
 import he from "he";
 import { deleteMessage, createEmbed } from "../common.js";
-
+const { parse } = htmlParser;
 const deleteTags = /<[^>]*>/gim;
 const wotdURL = "https://www.dictionary.com/e/word-of-the-day/";
 
@@ -13,8 +13,9 @@ export default {
 	help
 };
 
-async function handle(msg, msgDetails) {
+async function handle(msg, msgDetails) {	
 	const sendResultTo = msgDetails.mentionOrAuthor;
+	console.log(sendResultTo);
 	try {
 		console.log(`d!wotd: ${msg.author.username} searched for wotd`);
 
@@ -43,7 +44,6 @@ async function handle(msg, msgDetails) {
 		};
 
 		const embed = createEmbed(embedData);
-            
 		sendResultTo.send(embed);
 
 	} catch (e) {

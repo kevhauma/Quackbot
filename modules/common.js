@@ -10,8 +10,8 @@ export function getMessageDetails(msg) {
 	let args = msg.content.split(" ").filter(w => !w.startsWith("<@"));
 	const firstWord = args.shift();
 
-	let mentionOrAuthor = msg.mentions.members?.array()[0]?.user ?? msg.author;
-	let hasMentions = msg.mentions.members?.array().lenght > 0;
+	let mentionOrAuthor = msg.mentions.members?.toJSON()[0]?.user ?? msg.author;
+	let hasMentions = msg.mentions.members?.toJSON().lenght > 0;
 	let isOwner = msg.guild?.ownerID !== msg.author.id;
 
 	return {
@@ -26,10 +26,10 @@ export function getMessageDetails(msg) {
 export function createEmbed(data) {
 	let embed = new MessageEmbed(data);
 	embed.setDescription(data.description.substr(0,2000));
-	embed.setAuthor(client.user.username, client.user.avatarURL(), "https://github.com/kevhauma/Quackbot");
-	embed.setFooter(`${data.footer ? `${data.footer}\n` : ""}Made by ${process.env.OWNER}, go bother him if something is broken.`,data.footerImage??null);
+	embed.setAuthor({name:client.user.username,iconURL: client.user.avatarURL(),url: "https://github.com/kevhauma/Quackbot"});
+	embed.setFooter({text:`${data.footer ? `${data.footer}\n` : ""}Made by ${process.env.OWNER}, go bother him if something is broken.`,iconURL:data.footerImage??null});
     
 	embed.setImage(data.thumbnail ?? null);
 
-	return embed;
+	return {embeds:[embed]};
 }
