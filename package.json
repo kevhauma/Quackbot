@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r dotenv/config index.js",
+    "start:prod": "node index.js",
     "lint": "eslint ./*"
   },
   "author": "",
