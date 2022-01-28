@@ -6,4 +6,5 @@ RUN yarn install
 RUN ls -a
 RUN ls -a ./node_modules
 RUN cat ./.env
+CMD pwd
 CMD yarn start
