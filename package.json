@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node -r index.js",
+    "start": "node index.js",
     "lint": "eslint ./*"
   },
   "author": "",
