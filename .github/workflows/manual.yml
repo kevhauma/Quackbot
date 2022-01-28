@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: stop previous instance
         run: docker stop Quackbot
+      - name: delete container
+        run: docker rm $(docker ps --filter status=exited -q)
       - name: fill
         run: |
           echo "BOT_TOKEN=$BT" >> .env
