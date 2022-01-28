@@ -5,7 +5,9 @@ name: Manual workflow
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-  workflow_dispatch
+ push:
+  tags:
+    - v*
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,7 +22,7 @@ jobs:
      BO: ${{ secrets.BOT_OWNER }}
     steps:
       - name: test output
-        run: echo ${{github}}
+        run: echo ${{github.ref}}
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo "V0.0.1")
