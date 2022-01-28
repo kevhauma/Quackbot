@@ -29,8 +29,8 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: build
-        run: docker build -t bot:local .
+        run: docker build -t bot:local-${{ steps.get_version.outputs.VERSION }} .
       - name: run
-        run: docker run -d --name Quackbot bot:local
+        run: docker run -d --name Quackbot bot:local-${{ steps.get_version.outputs.VERSION }}
        
        
