@@ -29,6 +29,6 @@ jobs:
       - name: build
         run: docker build -t bot:local .
       - name: run
-        run: docker run --name Quackbot
+        run: docker run --name Quackbot bot:local
        
        
