@@ -19,7 +19,7 @@ intents.add(
 	Intents.FLAGS.DIRECT_MESSAGE_TYPING,
 	Intents.FLAGS.GUILD_SCHEDULED_EVENTS,
 );
-console.log(intents);
+
 export const client = new Client({ intents: intents });
 
 import { getMessageDetails } from "./modules/common.js";
@@ -45,5 +45,4 @@ client.on("messageCreate", async msg => {
 	});
 
 });
-console.log(process.env);
 client.login(process.env.BOT_TOKEN);

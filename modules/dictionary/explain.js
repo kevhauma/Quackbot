@@ -52,11 +52,7 @@ async function handle(msg, msgDetails) {
 	}
 
 	response.forEach((r, i) => {
-		setTimeout(() => {
-			sendResultTo.send({
-				embeds: [r]
-			});
-		}, i * 500);
+		setTimeout(() => sendResultTo.send(r), i * 500);
 	});
 	deleteMessage(msg);
 }
@@ -89,7 +85,7 @@ async function otherSearch(word, lang) {
 
 		const embedData = {
 			title:`d!explain ${entry.word} - ${lang}`,
-			url:`https://www.dictionary.com/browse/${word})`,            
+			url:`https://www.dictionary.com/browse/${word}`,            
 			description: descrString,
 			color:"#4E5D94",
 			footer:"Results provided by DictionaryAPI",
