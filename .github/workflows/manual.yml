@@ -18,15 +18,15 @@ jobs:
     env:
      BT: ${{ secrets.BOT_TOKEN }}
      BO: ${{ secrets.BOT_OWNER }}
-    steps:
+    steps:     
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: display secrets
         run: |
           touch .env
           echo "BOT_TOKEN=$BT" >> .env
           echo "OWNER=$BO" >> .env
           cat .env
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Deploy
         uses: ./
         id: deploy
