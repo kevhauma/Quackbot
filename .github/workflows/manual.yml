@@ -25,7 +25,7 @@ jobs:
         run: docker rm $(docker ps --filter status=exited -q)
       - name: fill
         run: |
-          echo "BOT_TOKEN=$BT" >> .env
+          echo "BOT_TOKEN=$BT" > .env
           echo "OWNER=$BO" >> .env
       - name: Get the version
         id: get_version
