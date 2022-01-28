@@ -54,7 +54,7 @@ async function handle(msg, msgDetails) {
 	response.forEach((r, i) => {
 		setTimeout(() => {
 			sendResultTo.send({
-				embed: r
+				embeds: [r]
 			});
 		}, i * 500);
 	});
