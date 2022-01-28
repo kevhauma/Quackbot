@@ -19,6 +19,8 @@ jobs:
      BT: ${{ secrets.BOT_TOKEN }}
      BO: ${{ secrets.BOT_OWNER }}
     steps:
+      - name: test output
+        run: echo $GITHUB_REF | cut -d /
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
