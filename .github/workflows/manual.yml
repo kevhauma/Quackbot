@@ -25,7 +25,7 @@ jobs:
         run: echo  ${{github.ref}} | cut -d / -f 3
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::$("${{github.ref}}" | cut -d / -f 3)
+        run: echo ::set-output name=VERSION::`"${{github.ref}}" | cut -d / -f 3`
       - name: kill previous container
         run: docker stop Quackbot || true && docker rm Quackbot || true && docker rmi $(docker images --filter=reference="*:bot:*" -q) || true
       - name: handle secrets
