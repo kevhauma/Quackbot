@@ -20,12 +20,12 @@ jobs:
      BO: ${{ secrets.BOT_OWNER }}
     steps:
       - name: test output
-        run: echo $GITHUB_REF
+        run: echo ${{github}}
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: echo ::set-output name=VERSION::$(echo "V0.0.1")
       - name: kill previous container
-        run: docker stop Quackbot || true && docker rm Quackbot || true && docker rmi bot:local || true
+        run: docker stop Quackbot || true && docker rm Quackbot || true && docker rmi $(docker images --filter=reference="*:bot:*" -q) || true
       - name: handle secrets
         run: |
           echo "BOT_TOKEN=$BT" > .env
