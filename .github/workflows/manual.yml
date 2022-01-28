@@ -21,14 +21,14 @@ jobs:
     steps:     
       - name: Checkout
         uses: actions/checkout@v2
-      - name: display secrets
+      - name: fill
         run: |
-          touch .env
           echo "BOT_TOKEN=$BT" >> .env
           echo "OWNER=$BO" >> .env
           cat .env
-      - name: Deploy
-        uses: ./
-        id: deploy
+      - name: build
+        run: docker build -t bot:local .
+      - name: run
+        run: docker run --name Quackbot
        
        
