@@ -27,7 +27,6 @@ jobs:
         run: |
           echo "BOT_TOKEN=$BT" >> .env
           echo "OWNER=$BO" >> .env
-          cat .env
       - name: build
         run: docker build -t bot:local .
       - name: run
