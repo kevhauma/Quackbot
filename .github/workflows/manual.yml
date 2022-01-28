@@ -19,18 +19,18 @@ jobs:
      BT: ${{ secrets.BOT_TOKEN }}
      BO: ${{ secrets.BOT_OWNER }}
     steps:
+     - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       - name: kill previous container
         run: docker stop Quackbot || true && docker rm Quackbot || true && docker rmi bot:local || true
       - name: handle secrets
         run: |
           echo "BOT_TOKEN=$BT" > .env
-          echo "OWNER=$BO" >> .env
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+          echo "OWNER=$BO" >> .env     
       - name: build
-        run: docker build -t bot:local-${{ steps.get_version.outputs.VERSION }} .
+        run: docker build -t bot:${{ steps.get_version.outputs.VERSION }} .
       - name: run
-        run: docker run -d --name Quackbot bot:local-${{ steps.get_version.outputs.VERSION }}
+        run: docker run -d --name Quackbot bot:${{ steps.get_version.outputs.VERSION }}
        
        
