@@ -18,7 +18,7 @@ intents.add(
 	Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
 	Intents.FLAGS.DIRECT_MESSAGE_TYPING,
 	Intents.FLAGS.GUILD_SCHEDULED_EVENTS,
-); //include DMS? somehow
+);
 
 export const client = new Client({ intents: intents });
 
