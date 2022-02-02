@@ -29,14 +29,18 @@ jobs:
         run: docker stop Quackbot || true && docker rm Quackbot || true && docker rmi $(docker images --filter=reference="bot:v*" -q) || true
       - name: pull code
         run: |
+          rm -rf Quackbot
           git clone https://github.com/kevhauma/Quackbot.git
           cd Quackbot
       - name: handle secrets
         run: |
+          cd Quackbot
           echo "BOT_TOKEN=$BT" > .env
           echo "OWNER=$BO" >> .env     
       - name: build
-        run: docker build -t bot:${{ steps.get_version.outputs.VERSION }} .
+        run: |
+          cd Quackbot
+          docker build -t bot:${{ steps.get_version.outputs.VERSION }} .
       - name: run
         run: docker run -d --name Quackbot bot:${{ steps.get_version.outputs.VERSION }}
        
