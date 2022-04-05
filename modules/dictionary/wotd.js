@@ -19,7 +19,7 @@ async function handle(msg, msgDetails) {
 	try {
 		console.log(`d!wotd: ${msg.author.username} searched for wotd`);
 
-		let { data } = await axios.get(`${wotdURL}`);
+		const { data } = await axios.get(`${wotdURL}`);
 		let htmlDOM = parse(data);
 
 		let wordDOM = htmlDOM.querySelector(".otd-item-headword__word");
