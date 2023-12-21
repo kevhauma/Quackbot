@@ -1,0 +1,1 @@
+export * as DictionaryModule from "./dictionary/index.js";

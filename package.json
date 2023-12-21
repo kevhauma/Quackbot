@@ -11,11 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
-    "discord.js": "^13.6.0",
-    "dotenv": "^10.0.0",
+    "@discordjs/rest": "^2.2.0",
+    "axios": "^1.6.2",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
     "he": "^1.2.0",
-    "node-html-parser": "^3.3.4"
+    "node-html-parser": "^6.1.11"
   },
   "devDependencies": {
     "eslint": "^7.27.0"
