@@ -5,8 +5,8 @@ general discord bot for own use
 - [ ] Infrastructure
   - [ ] decent logging
   - [ ] seperate settings for servers/guilds
-  - [ ] info commands of modules
-  - [ ] help commands per module
+  - [ ] transfer commands to slash commandss
+  - [ ] get rid of prefix
   
 
 - [ ] Dictionary
