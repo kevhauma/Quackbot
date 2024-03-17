@@ -20,6 +20,8 @@ general discord bot for own use
   
 - [ ] Dictionary
   - [ ] Translations(?)
+     
+- [ ] bitchfight (move 2 people to seperate channel where they can fight out their issues)
 
 ### Doing
 - [ ] Dictionary
